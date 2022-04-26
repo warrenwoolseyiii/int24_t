@@ -70,6 +70,53 @@ int main( void )
     val2 *= 3;
     assert( val2 == 4197304 );
 
+    // Test division
+    val1 = 1;
+    assert( val1 / 2 == 0 );
+    val1 = 16;
+    val2 = val1 / 4;
+    assert( val2 == 4 );
+    val3 = INT24_MAX / INT24_MIN;
+    assert( val3 == 0 );
+    val3 = INT24_MAX / ( INT24_MIN + 1000 );
+    assert( val3 == -1 );
+
+    // Test bit shifting
+    val1 = 1;
+    assert( val1 << 1 == 2 );
+    val1 <<= 10;
+    assert( val1 == 1 << 10 );
+    val2 = 0x4;
+    assert( val2 >> 10 == 0 );
+    val2 >>= 8;
+    assert( val2 == 0 );
+    val2 = 0x8 >> 3;
+    assert( val2 == 1 );
+    val1 = 1 << 23;
+    assert( val1 == (int24_t)0x800000 );
+    assert( val1 << 24 == 0 );
+
+    // Test equility
+    val1 = -1;
+    val2 = 1;
+    val3 = 0;
+    assert( val1 != val2 );
+    assert( val1 != val3 );
+    assert( val2 != val3 );
+    assert( val1 < val3 );
+    assert( val2 > val3 );
+    assert( val2 > val1 );
+    assert( val2 >= 1 );
+    assert( val2 <= 1 );
+    assert( val1 > -2 );
+    assert( val1 < 0 );
+
+    // Test modulo
+    val1 = 255;
+    assert( val1 % 8 == 7 );
+    val1 %= 4;
+    assert( val1 == 3 );
+
     cout << "All tests passed!\n";
 
     return 0;

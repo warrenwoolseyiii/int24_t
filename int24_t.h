@@ -22,9 +22,16 @@ class int24_t
         *this = (int)val;
     }
 
+    int24_t( const unsigned char val[3] )
+    {
+        value[0] = val[0];
+        value[1] = val[1];
+        value[2] = val[2];
+    }
+
     operator int() const
     {
-        /* Sign extend negative quantities */
+        // Ensure signed values are handled properly
         if( value[2] & 0x80 ) {
             return ( 0xff << 24 ) | ( value[2] << 16 ) | ( value[1] << 8 ) | value[0];
         }
@@ -71,6 +78,11 @@ class int24_t
         return int24_t( (int)*this / (int)val );
     }
 
+    int24_t operator%( const int24_t &val ) const
+    {
+        return int24_t( (int)*this % (int)val );
+    }
+
     int24_t &operator+=( const int24_t &val )
     {
         *this = *this + val;
@@ -95,6 +107,12 @@ class int24_t
         return *this;
     }
 
+    int24_t &operator%=( const int24_t &val )
+    {
+        *this = *this % val;
+        return *this;
+    }
+
     int24_t operator+( const int &val ) const
     {
         return int24_t( (int)*this + val );
@@ -113,6 +131,11 @@ class int24_t
     int24_t operator/( const int &val ) const
     {
         return int24_t( (int)*this / val );
+    }
+
+    int24_t operator%( const int &val ) const
+    {
+        return int24_t( (int)*this % val );
     }
 
     int24_t &operator+=( const int &val )
@@ -139,6 +162,12 @@ class int24_t
         return *this;
     }
 
+    int24_t &operator%=( const int &val )
+    {
+        *this = *this % val;
+        return *this;
+    }
+
     int24_t operator>>( const int val ) const
     {
         return int24_t( (int)*this >> val );
@@ -147,6 +176,18 @@ class int24_t
     int24_t operator<<( const int val ) const
     {
         return int24_t( (int)*this << val );
+    }
+
+    int24_t &operator<<=( const int &val )
+    {
+        *this = int24_t( (int)*this << val );
+        return *this;
+    }
+
+    int24_t &operator>>=( const int &val )
+    {
+        *this = int24_t( (int)*this >> val );
+        return *this;
     }
 
     operator bool() const
@@ -216,5 +257,5 @@ class int24_t
         return *this;
     }
 
-    /* Define all operations you need below.. */
+    // Make anymore operators that you want to!
 };
